@@ -7,6 +7,7 @@ def index():
     documents = [
         "Grundbuch",
         "Flurkarte",
+        "amtliche Flurkarte",
         "Teilungserklärung",
         "Aufteilungsplan",
         "Eintragungsbewilligung",
