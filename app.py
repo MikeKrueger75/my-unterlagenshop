@@ -7,14 +7,13 @@ def index():
     documents = [
         "Grundbuch",
         "Flurkarte",
-        "amtliche Flurkarte",
         "Teilungserklärung",
         "Aufteilungsplan",
         "Eintragungsbewilligung",
         "Baulastenverzeichnis",
         "Altlastenverzeichnis"
     ]
-    return render_template('index.html', documents=documents)
+    return render_template('produkte.html', documents=documents)
 
 if __name__ == '__main__':
     app.run(debug=True)
