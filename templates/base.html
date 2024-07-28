@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        .tooltip-inner {
+            max-width: 350px;
+            text-align: left;
+        }
+        .custom-tooltip {
+            position: absolute;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .nav-tabs .nav-link.disabled {
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="nav nav-tab my-4">
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'produkte' %}active{% else %}disabled{% endif %}" href="#">Unterlagen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'immobiliendaten' %}active{% else %}disabled{% endif %}" href="#">Immobilie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'kundendaten' %}active{% else %}disabled{% endif %}" href="#">Besteller</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'angaben' %}active{% else %}disabled{% endif %}" href="#">Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'eigentuemervollmacht' %}active{% else %}disabled{% endif %}" href="#">Vollmacht</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'zusammenfassung' %}active{% else %}disabled{% endif %}" href="#">Bestellung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'bezahlung' %}active{% else %}disabled{% endif %}" href="#">Bezahlung</a>
+            </li>
+        </ul>
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'manual',
+                placement: 'right'
+            }).on('mouseenter', function (e) {
+                var $this = $(this);
+                $this.tooltip('show');
+                $('.tooltip').addClass('custom-tooltip');
+            }).on('mousemove', function (e) {
+                $('.custom-tooltip').css({
+                    left: e.pageX + 10 + 'px',
+                    top: e.pageY + 10 + 'px'
+                });
+            }).on('mouseleave', function () {
+                $(this).tooltip('hide');
+            });
+        });
+    </script>
+</body>
+</html>
