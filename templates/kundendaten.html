@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Kundendaten</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Kundendaten</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="anrede">Anrede</label>
+                <select class="form-control" id="anrede" name="anrede" required>
+                    <option value="" {% if session.get('anrede') == "" %}selected{% endif %}>Bitte wählen</option>
+                    <option value="Herr" {% if session.get('anrede') == "Herr" %}selected{% endif %}>Herr</option>
+                    <option value="Frau" {% if session.get('anrede') == "Frau" %}selected{% endif %}>Frau</option>
+                    <option value="Divers" {% if session.get('anrede') == "Divers" %}selected{% endif %}>Divers</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="vorname">Vorname</label>
+                    <input type="text" class="form-control" id="vorname" name="vorname" value="{{ session.get('vorname', '') }}" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="nachname">Nachname</label>
+                    <input type="text" class="form-control" id="nachname" name="nachname" value="{{ session.get('nachname', '') }}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="email">E-Mail-Adresse</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ session.get('email', '') }}" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="telefonnummer">Telefonnummer</label>
+                    <input type="tel" class="form-control" id="telefonnummer" name="telefonnummer" value="{{ session.get('telefonnummer', '') }}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label for="strasse">Straße</label>
+                    <input type="text" class="form-control" id="strasse" name="strasse" value="{{ session.get('strasse', '') }}" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="hausnummer">Hausnummer</label>
+                    <input type="text" class="form-control" id="hausnummer" name="hausnummer" value="{{ session.get('hausnummer', '') }}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="plz">PLZ</label>
+                    <input type="text" class="form-control" id="plz" name="plz" value="{{ session.get('plz', '') }}" required>
+                </div>
+                <div class="form-group col-md-9">
+                    <label for="ort">Ort</label>
+                    <input type="text" class="form-control" id="ort" name="ort" value="{{ session.get('ort', '') }}" required>
+                </div>
+            </div>
+            <div class="form-group text-right">
+                <a href="{{ url_for('immobiliendaten') }}" class="btn btn-secondary">Zurück</a>
+                <button type="submit" class="btn btn-primary">Weiter</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
