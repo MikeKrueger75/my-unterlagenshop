@@ -15,13 +15,15 @@
                 <option value="Divers" {% if session.get('anrede') == "Divers" %}selected{% endif %}>Divers</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="vorname">Vorname</label>
-            <input type="text" class="form-control" id="vorname" name="vorname" value="{{ session.get('vorname', '') }}" required>
-        </div>
-        <div class="form-group">
-            <label for="nachname">Nachname</label>
-            <input type="text" class="form-control" id="nachname" name="nachname" value="{{ session.get('nachname', '') }}" required>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="vorname">Vorname</label>
+                <input type="text" class="form-control" id="vorname" name="vorname" value="{{ session.get('vorname', '') }}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="nachname">Nachname</label>
+                <input type="text" class="form-control" id="nachname" name="nachname" value="{{ session.get('nachname', '') }}" required>
+            </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -33,21 +35,25 @@
                 <input type="tel" class="form-control" id="telefonnummer" name="telefonnummer" value="{{ session.get('telefonnummer', '') }}" required>
             </div>
         </div>
-        <div class="form-group">
-            <label for="strasse">Straße</label>
-            <input type="text" class="form-control" id="strasse" name="strasse" value="{{ session.get('strasse', '') }}" required>
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="strasse">Straße</label>
+                <input type="text" class="form-control" id="strasse" name="strasse" value="{{ session.get('strasse', '') }}" required>
+            </div>
+            <div class="form-group  col-md-3">
+                <label for="hausnummer">Hausnummer</label>
+                <input type="text" class="form-control" id="hausnummer" name="hausnummer" value="{{ session.get('hausnummer', '') }}" required>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="hausnummer">Hausnummer</label>
-            <input type="text" class="form-control" id="hausnummer" name="hausnummer" value="{{ session.get('hausnummer', '') }}" required>
-        </div>
-        <div class="form-group">
-            <label for="plz">PLZ</label>
-            <input type="text" class="form-control" id="plz" name="plz" value="{{ session.get('plz', '') }}" required>
-        </div>
-        <div class="form-group">
-            <label for="ort">Ort</label>
-            <input type="text" class="form-control" id="ort" name="ort" value="{{ session.get('ort', '') }}" required>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="plz">PLZ</label>
+                <input type="text" class="form-control" id="plz" name="plz" value="{{ session.get('plz', '') }}" required>
+            </div>
+            <div class="form-group col-md-9">
+                <label for="ort">Ort</label>
+                <input type="text" class="form-control" id="ort" name="ort" value="{{ session.get('ort', '') }}" required>
+            </div>
         </div>
         <div class="row">
             <div class="col-6 text-left">

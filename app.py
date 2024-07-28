@@ -22,8 +22,14 @@ def produkte():
     ]
     return render_template('produkte.html', documents=documents, active_page='produkte')
 
-@app.route('/immobiliendaten')
+@app.route('/immobiliendaten', methods=['GET', 'POST'])
 def immobiliendaten():
+    if request.method == 'POST':
+        session['immo_strasse'] = request.form['immo_strasse']
+        session['immo_hausnummer'] = request.form['immo_hausnummer']
+        session['immo_plz'] = request.form['immo_plz']
+        session['immo_ort'] = request.form['immo_ort']
+        return redirect(url_for('kundendaten'))
     return render_template('immobiliendaten.html', active_page='immobiliendaten')
 
 @app.route('/kundendaten', methods=['GET', 'POST'])

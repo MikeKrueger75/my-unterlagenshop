@@ -1,18 +1,37 @@
 {% extends "base.html" %}
 {% set active_page = 'immobiliendaten' %}
 
-{% block title %}Unterlagen bestellen{% endblock %}
+{% block title %}Immobiliendaten{% endblock %}
 
 {% block content %}
-    <h1 class="my-4">Immobilie</h1>
-    <form>
-        <!-- Formularelemente für Immobiliendaten hier hinzufügen -->
+    <h1 class="my-4">Immobiliendaten</h1>
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group  col-md-9">
+                <label for="strasse">Straße</label>
+                <input type="text" class="form-control" id="immo_strasse" name="immo_strasse" value="{{ session.get('immo_strasse', '') }}" required>
+            </div>
+            <div class="form-group  col-md-3">
+                <label for="hausnummer">Hausnummer</label>
+                <input type="text" class="form-control" id="immo_hausnummer" name="immo_hausnummer" value="{{ session.get('immo_hausnummer', '') }}" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group  col-md-3">
+                <label for="plz">PLZ</label>
+                <input type="text" class="form-control" id="immo_plz" name="immo_plz" value="{{ session.get('immo_plz', '') }}" required>
+            </div>
+            <div class="form-group  col-md-9">
+                <label for="ort">Ort</label>
+                <input type="text" class="form-control" id="immo_ort" name="immo_ort" value="{{ session.get('immo_ort', '') }}" required>
+            </div>
+        </div>
         <div class="row">
             <div class="col-6 text-left">
                 <a href="{{ url_for('produkte') }}" class="btn btn-secondary">Zurück</a>
             </div>
             <div class="col-6 text-right">
-                <a href="{{ url_for('kundendaten') }}" class="btn btn-primary">Weiter</a>
+                <button type="submit" class="btn btn-primary">Weiter</button>
             </div>
         </div>
     </form>
