@@ -1,15 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, request, session
 from datetime import timedelta
 
-application = Flask(__name__)
-application.secret_key = 'your_secret_key'
-application.permanent_session_lifetime = timedelta(days=180)
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+app.permanent_session_lifetime = timedelta(days=180)
 
-@application.route('/')
+@app.route('/')
 def index():
     return redirect(url_for('produkte'))
 
-@application.route('/produkte')
+@app.route('/produkte')
 def produkte():
     documents = [
         {"name": "Grundbuch", "preis": 50, "beschreibung": "Ein Grundbuchauszug enthält Informationen über die Eigentümer und Rechte an einer Immobilie."},
@@ -22,11 +22,11 @@ def produkte():
     ]
     return render_template('produkte.html', documents=documents)
 
-@application.route('/immobiliendaten')
+@app.route('/immobiliendaten')
 def immobiliendaten():
     return render_template('immobiliendaten.html')
 
-@application.route('/kundendaten', methods=['GET', 'POST'])
+@app.route('/kundendaten', methods=['GET', 'POST'])
 def kundendaten():
     if request.method == 'POST':
         session['anrede'] = request.form['anrede']
@@ -41,25 +41,25 @@ def kundendaten():
         return redirect(url_for('angaben'))
     return render_template('kundendaten.html', session=session)
 
-@application.route('/angaben')
+@app.route('/angaben')
 def angaben():
     return render_template('angaben.html')
 
-@application.route('/eigentuemervollmacht')
+@app.route('/eigentuemervollmacht')
 def eigentuemervollmacht():
     return render_template('eigentuemervollmacht.html')
 
-@application.route('/zusammenfassung')
+@app.route('/zusammenfassung')
 def zusammenfassung():
     return render_template('zusammenfassung.html')
 
-@application.route('/bezahlung')
+@app.route('/bezahlung')
 def bezahlung():
     return render_template('bezahlung.html')
 
-@application.route('/bestaetigung')
+@app.route('/bestaetigung')
 def bestaetigung():
     return render_template('bestaetigung.html')
 
 if __name__ == '__main__':
-    application.run(debug=True)
+    app.run(debug=True)
