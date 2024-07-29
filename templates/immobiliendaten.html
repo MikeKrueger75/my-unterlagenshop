@@ -5,7 +5,12 @@
 
 {% block content %}
     <form method="POST">
-        <h1 class="my-4">Immobiliendaten</h1>
+        <h1 class="my-4">Immobilie</h1>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                Für welche Immobilie sollen die Unterlagen geliefert werden?
+            </div>
+        </div>
         <div class="form-row">
             <div class="form-group col-md-9">
                 <label for="strasse">Straße</label>
@@ -32,17 +37,19 @@
                 Für die Einholung von Informationen über fremde Immobilien ist die Zustimmung (Vollmacht) des Eigentümers erforderlich. Um die Vollmacht zu erstellen, benötigen wir einige Angaben zum Eigentümer.
             </div>
         </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_person" value="eigentuemer_person" {% if session.get('eigentuemer_typ') != "eigentuemer_firma" %}checked{% endif %}>
-            <label class="form-check-label" for="eigentuemer_person">
-            natürliche Person
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_firma" value="eigentuemer_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}checked{% endif %}>
-            <label class="form-check-label" for="eigentuemer_firma">
-            juristische Person
-            </label>
+        <div class="form-row">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_person" value="eigentuemer_person" {% if session.get('eigentuemer_typ') != "eigentuemer_firma" %}checked{% endif %}>
+                <label class="form-check-label" for="eigentuemer_person">
+                natürliche Person
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_firma" value="eigentuemer_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}checked{% endif %}>
+                <label class="form-check-label" for="eigentuemer_firma">
+                juristische Person
+                </label>
+            </div>
         </div>
         <div class="form-row" id="name_person" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}style="display: none;"{% endif %}>
             <div class="form-group col-md-6">

@@ -9,17 +9,24 @@ app.permanent_session_lifetime = timedelta(days=7)
 def index():
     return redirect(url_for('produkte'))
 
-@app.route('/produkte')
+@app.route('/produkte', methods=['GET', 'POST'])
 def produkte():
     documents = [
-        {"name": "Grundbuch", "preis": 50, "beschreibung": "Ein Grundbuchauszug enthält Informationen über die Eigentümer und Rechte an einer Immobilie."},
-        {"name": "Flurkarte", "preis": 30, "beschreibung": "Eine Flurkarte zeigt die genaue Lage und Abgrenzung von Grundstücken."},
-        {"name": "Teilungserklärung", "preis": 100, "beschreibung": "Die Teilungserklärung teilt das Gebäude in einzelne Eigentumseinheiten auf."},
-        {"name": "Aufteilungsplan", "preis": 70, "beschreibung": "Der Aufteilungsplan zeigt die räumliche Aufteilung der Immobilie."},
-        {"name": "Eintragungsbewilligung", "preis": 40, "beschreibung": "Die Eintragungsbewilligung ist die Zustimmung zur Eintragung von Rechten ins Grundbuch."},
-        {"name": "Baulastenverzeichnis", "preis": 20, "beschreibung": "Das Baulastenverzeichnis enthält Informationen über öffentlich-rechtliche Verpflichtungen eines Grundstücks."},
-        {"name": "Altlastenverzeichnis", "preis": 25, "beschreibung": "Das Altlastenverzeichnis gibt Auskunft über Boden- und Grundwasserverunreinigungen."}
+        {"name": "Grundbuch", "id":"grundbuchauszug", "preis": 50, "beschreibung": "Ein Grundbuchauszug enthält Informationen über die Eigentümer und Rechte an einer Immobilie."},
+        {"name": "Flurkarte", "id":"flurkarte", "preis": 12.80, "beschreibung": "Eine Flurkarte zeigt die genaue Lage und Abgrenzung von Grundstücken."},
+        {"name": "Teilungserklärung", "id":"teilungserklaerung", "preis": 100, "beschreibung": "Die Teilungserklärung teilt das Gebäude in einzelne Eigentumseinheiten auf."},
+        {"name": "Aufteilungsplan", "id":"aufteilungsplan", "preis": 70, "beschreibung": "Der Aufteilungsplan zeigt die räumliche Aufteilung der Immobilie."},
+        {"name": "Eintragungsbewilligung", "id":"eintragungsbewilligung", "preis": 40, "beschreibung": "Die Eintragungsbewilligung ist die Zustimmung zur Eintragung von Rechten ins Grundbuch."},
+        {"name": "Baulastenverzeichnis", "id":"baulastenverzeichnis", "preis": 20, "beschreibung": "Das Baulastenverzeichnis enthält Informationen über öffentlich-rechtliche Verpflichtungen eines Grundstücks."},
+        {"name": "Altlastenverzeichnis", "id":"altlastenverzeichnis", "preis": 25, "beschreibung": "Das Altlastenverzeichnis gibt Auskunft über Boden- und Grundwasserverunreinigungen."}
     ]
+    if request.method == 'POST':
+        ## delete all to refill new and make uncheck possible
+        for doc in documents:
+            session[doc['id']] = ''
+        for key, val in request.form.items():
+            session[key] = key
+        return redirect(url_for('immobiliendaten'))
     return render_template('produkte.html', documents=documents, active_page='produkte')
 
 @app.route('/immobiliendaten', methods=['GET', 'POST'])
