@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% set active_page = 'immobiliendaten' %}
 
-{% block title %}Immobiliendaten{% endblock %}
+{% block title %}Unterlagen bestellen{% endblock %}
 
 {% block content %}
     <form method="POST">
-        <h1 class="my-4">Immobilie</h1>
+        <h1 class="my-4">Grundstücks- oder Immobilienadresse</h1>
         <div class="form-row">
             <div class="form-group col-md-12">
                 Für welche Immobilie sollen die Unterlagen geliefert werden?
@@ -32,59 +32,78 @@
             </div>
         </div>
         <h1 class="my-4">Eigentümer</h1>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                Für die Einholung von Informationen über fremde Immobilien ist die Zustimmung (Vollmacht) des Eigentümers erforderlich. Um die Vollmacht zu erstellen, benötigen wir einige Angaben zum Eigentümer.
+        <div class="form-row  col-md-12 my-4">
+            <div class="text col-md-4">
+                Sind Sie der Besitzer der Immobilie?
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_person" value="eigentuemer_person" {% if session.get('eigentuemer_typ') != "eigentuemer_firma" %}checked{% endif %}>
+            <div class="form-check form-check-inline col-auto">
+                <input class="form-check-input" type="radio" name="buyer_is_owner" id="buyer_is_owner_y" value="buyer_is_owner_y" {% if session.get('buyer_is_owner') == "buyer_is_owner_y" %}checked{% endif %}>
                 <label class="form-check-label" for="eigentuemer_person">
-                natürliche Person
+                Ja
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_firma" value="eigentuemer_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}checked{% endif %}>
+                <input class="form-check-input" type="radio" name="buyer_is_owner" id="buyer_is_owner_n" value="buyer_is_owner_n" {% if session.get('buyer_is_owner') == "buyer_is_owner_n" %}checked{% endif %}>
                 <label class="form-check-label" for="eigentuemer_firma">
-                juristische Person
+                Nein
                 </label>
             </div>
         </div>
-        <div class="form-row" id="name_person" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}style="display: none;"{% endif %}>
-            <div class="form-group col-md-6">
-                <label for="eigentuemer_vorname">Vorname</label>
-                <input type="text" class="form-control" id="eigentuemer_vorname" name="eigentuemer_vorname" value="{{ session.get('eigentuemer_vorname', '') }}">
+        <div class="form-group" id="eigentuemer">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    Für die Einholung von Informationen über fremde Immobilien ist die Zustimmung (Vollmacht) des Eigentümers erforderlich. Um die Vollmacht zu erstellen, benötigen wir einige Angaben zum Eigentümer.
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="eigentuemer_nachname">Nachname</label>
-                <input type="text" class="form-control" id="eigentuemer_nachname" name="eigentuemer_nachname" value="{{ session.get('eigentuemer_nachname', '') }}">
+            <div class="form-row  col-md-12 my-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_person" value="eigentuemer_person" {% if session.get('eigentuemer_typ') != "eigentuemer_firma" %}checked{% endif %}>
+                    <label class="form-check-label" for="eigentuemer_person">
+                    natürliche Person
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_firma" value="eigentuemer_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}checked{% endif %}>
+                    <label class="form-check-label" for="eigentuemer_firma">
+                    juristische Person
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="form-row" id="name_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_person" %}style="display: none;"{% endif %}>
-            <div class="form-group col-md-12">
-                <label for="eigentuemer_firmenname">Firmenname</label>
-                <input type="text" class="form-control" id="eigentuemer_firmenname" name="eigentuemer_firmenname" value="{{ session.get('eigentuemer_firmenname', '') }}">
+            <div class="form-row" id="name_person" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}style="display: none;"{% endif %}>
+                <div class="form-group col-md-6">
+                    <label for="eigentuemer_vorname">Vorname</label>
+                    <input type="text" class="form-control" id="eigentuemer_vorname" name="eigentuemer_vorname" value="{{ session.get('eigentuemer_vorname', '') }}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="eigentuemer_nachname">Nachname</label>
+                    <input type="text" class="form-control" id="eigentuemer_nachname" name="eigentuemer_nachname" value="{{ session.get('eigentuemer_nachname', '') }}">
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-9">
-                <label for="eigentuemer_strasse">Straße</label>
-                <input type="text" class="form-control" id="eigentuemer_strasse" name="eigentuemer_strasse" value="{{ session.get('eigentuemer_strasse', '') }}" required>
+            <div class="form-row" id="name_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_person" %}style="display: none;"{% endif %}>
+                <div class="form-group col-md-12">
+                    <label for="eigentuemer_firmenname">Firmenname</label>
+                    <input type="text" class="form-control" id="eigentuemer_firmenname" name="eigentuemer_firmenname" value="{{ session.get('eigentuemer_firmenname', '') }}">
+                </div>
             </div>
-            <div class="form-group col-md-3">
-                <label for="eigentuemer_hausnummer">Hausnummer</label>
-                <input type="text" class="form-control" id="eigentuemer_hausnummer" name="eigentuemer_hausnummer" value="{{ session.get('eigentuemer_hausnummer', '') }}" required>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label for="eigentuemer_strasse">Straße</label>
+                    <input type="text" class="form-control" id="eigentuemer_strasse" name="eigentuemer_strasse" value="{{ session.get('eigentuemer_strasse', '') }}" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="eigentuemer_hausnummer">Hausnummer</label>
+                    <input type="text" class="form-control" id="eigentuemer_hausnummer" name="eigentuemer_hausnummer" value="{{ session.get('eigentuemer_hausnummer', '') }}" required>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="eigentuemer_plz">PLZ</label>
-                <input type="text" class="form-control" id="eigentuemer_plz" name="eigentuemer_plz" value="{{ session.get('eigentuemer_plz', '') }}" required>
-            </div>
-            <div class="form-group col-md-9">
-                <label for="eigentuemer_ort">Ort</label>
-                <input type="text" class="form-control" id="eigentuemer_ort" name="eigentuemer_ort" value="{{ session.get('eigentuemer_ort', '') }}" required>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="eigentuemer_plz">PLZ</label>
+                    <input type="text" class="form-control" id="eigentuemer_plz" name="eigentuemer_plz" value="{{ session.get('eigentuemer_plz', '') }}" required>
+                </div>
+                <div class="form-group col-md-9">
+                    <label for="eigentuemer_ort">Ort</label>
+                    <input type="text" class="form-control" id="eigentuemer_ort" name="eigentuemer_ort" value="{{ session.get('eigentuemer_ort', '') }}" required>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -125,6 +144,28 @@
             } else if (eigentuemerFirma.checked) {
                 namePerson.style.display = 'none';
                 nameFirma.style.display = 'flex';
+            }
+
+            var buyer_is_owner_y = document.getElementById('buyer_is_owner_y');
+            var buyer_is_owner_n = document.getElementById('buyer_is_owner_n');
+            var eigentuemer = document.getElementById('eigentuemer');
+
+            buyer_is_owner_y.addEventListener('change', function() {
+                if (this.checked) {
+                    eigentuemer.style.display = 'none';
+                }
+            });
+            buyer_is_owner_n.addEventListener('change', function() {
+                if (this.checked) {
+                    eigentuemer.style.display = 'grid';
+                }
+            });
+            if (buyer_is_owner_y.checked) {
+                eigentuemer.style.display = 'none';
+            } else if (eigentuemerFirma.checked) {
+                eigentuemer.style.display = 'grid';
+            } else {
+                eigentuemer.style.display = 'none';
             }
         });
     </script>
