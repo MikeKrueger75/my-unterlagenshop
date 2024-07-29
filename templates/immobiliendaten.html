@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_person" value="eigentuemer_person" {% if session.get('eigentuemer_typ') == "eigentuemer_person" %}checked{% endif %}>
+            <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_person" value="eigentuemer_person" {% if session.get('eigentuemer_typ') != "eigentuemer_firma" %}checked{% endif %}>
             <label class="form-check-label" for="eigentuemer_person">
             natürliche Person
             </label>
