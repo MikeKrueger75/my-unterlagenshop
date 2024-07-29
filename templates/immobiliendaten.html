@@ -4,26 +4,80 @@
 {% block title %}Immobiliendaten{% endblock %}
 
 {% block content %}
-    <h1 class="my-4">Immobiliendaten</h1>
     <form method="POST">
+        <h1 class="my-4">Immobiliendaten</h1>
         <div class="form-row">
-            <div class="form-group  col-md-9">
+            <div class="form-group col-md-9">
                 <label for="strasse">Straße</label>
                 <input type="text" class="form-control" id="immo_strasse" name="immo_strasse" value="{{ session.get('immo_strasse', '') }}" required>
             </div>
-            <div class="form-group  col-md-3">
+            <div class="form-group col-md-3">
                 <label for="hausnummer">Hausnummer</label>
-                <input type="text" class="form-control" id="immo_hausnummer" name="immo_hausnummer" value="{{ session.get('immo_hausnummer', '') }}" required>
+                <input type="text" class="form-control" id="immo_hausnummer" name="immo_hausnummer" value="{{ session.get('immo_hausnummer', '') }}">
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group  col-md-3">
+            <div class="form-group col-md-3">
                 <label for="plz">PLZ</label>
                 <input type="text" class="form-control" id="immo_plz" name="immo_plz" value="{{ session.get('immo_plz', '') }}" required>
             </div>
-            <div class="form-group  col-md-9">
+            <div class="form-group col-md-9">
                 <label for="ort">Ort</label>
                 <input type="text" class="form-control" id="immo_ort" name="immo_ort" value="{{ session.get('immo_ort', '') }}" required>
+            </div>
+        </div>
+        <h1 class="my-4">Eigentümer</h1>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                Für die Einholung von Informationen über fremde Immobilien ist die Zustimmung (Vollmacht) des Eigentümers erforderlich. Um die Vollmacht zu erstellen, benötigen wir einige Angaben zum Eigentümer.
+            </div>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_person" value="eigentuemer_person" {% if session.get('eigentuemer_typ') == "eigentuemer_person" %}checked{% endif %}>
+            <label class="form-check-label" for="eigentuemer_person">
+            natürliche Person
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="eigentuemer_typ" id="eigentuemer_firma" value="eigentuemer_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}checked{% endif %}>
+            <label class="form-check-label" for="eigentuemer_firma">
+            juristische Person
+            </label>
+        </div>
+        <div class="form-row" id="name_person" {% if session.get('eigentuemer_typ') == "eigentuemer_firma" %}style="display: none;"{% endif %}>
+            <div class="form-group col-md-6">
+                <label for="eigentuemer_vorname">Vorname</label>
+                <input type="text" class="form-control" id="eigentuemer_vorname" name="eigentuemer_vorname" value="{{ session.get('eigentuemer_vorname', '') }}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="eigentuemer_nachname">Nachname</label>
+                <input type="text" class="form-control" id="eigentuemer_nachname" name="eigentuemer_nachname" value="{{ session.get('eigentuemer_nachname', '') }}">
+            </div>
+        </div>
+        <div class="form-row" id="name_firma" {% if session.get('eigentuemer_typ') == "eigentuemer_person" %}style="display: none;"{% endif %}>
+            <div class="form-group col-md-12">
+                <label for="eigentuemer_firmenname">Firmenname</label>
+                <input type="text" class="form-control" id="eigentuemer_firmenname" name="eigentuemer_firmenname" value="{{ session.get('eigentuemer_firmenname', '') }}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="eigentuemer_strasse">Straße</label>
+                <input type="text" class="form-control" id="eigentuemer_strasse" name="eigentuemer_strasse" value="{{ session.get('eigentuemer_strasse', '') }}" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="eigentuemer_hausnummer">Hausnummer</label>
+                <input type="text" class="form-control" id="eigentuemer_hausnummer" name="eigentuemer_hausnummer" value="{{ session.get('eigentuemer_hausnummer', '') }}" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="eigentuemer_plz">PLZ</label>
+                <input type="text" class="form-control" id="eigentuemer_plz" name="eigentuemer_plz" value="{{ session.get('eigentuemer_plz', '') }}" required>
+            </div>
+            <div class="form-group col-md-9">
+                <label for="eigentuemer_ort">Ort</label>
+                <input type="text" class="form-control" id="eigentuemer_ort" name="eigentuemer_ort" value="{{ session.get('eigentuemer_ort', '') }}" required>
             </div>
         </div>
         <div class="row">
@@ -35,4 +89,36 @@
             </div>
         </div>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var eigentuemerPerson = document.getElementById('eigentuemer_person');
+            var eigentuemerFirma = document.getElementById('eigentuemer_firma');
+            var namePerson = document.getElementById('name_person');
+            var nameFirma = document.getElementById('name_firma');
+
+            eigentuemerPerson.addEventListener('change', function() {
+                if (this.checked) {
+                    namePerson.style.display = 'flex';
+                    nameFirma.style.display = 'none';
+                }
+            });
+
+            eigentuemerFirma.addEventListener('change', function() {
+                if (this.checked) {
+                    namePerson.style.display = 'none';
+                    nameFirma.style.display = 'flex';
+                }
+            });
+
+            // Set initial visibility based on session data
+            if (eigentuemerPerson.checked) {
+                namePerson.style.display = 'flex';
+                nameFirma.style.display = 'none';
+            } else if (eigentuemerFirma.checked) {
+                namePerson.style.display = 'none';
+                nameFirma.style.display = 'flex';
+            }
+        });
+    </script>
 {% endblock %}

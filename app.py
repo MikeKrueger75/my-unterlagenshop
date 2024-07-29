@@ -29,6 +29,14 @@ def immobiliendaten():
         session['immo_hausnummer'] = request.form['immo_hausnummer']
         session['immo_plz'] = request.form['immo_plz']
         session['immo_ort'] = request.form['immo_ort']
+        session['eigentuemer_typ'] = request.form['eigentuemer_typ']
+        session['eigentuemer_firmenname'] = request.form['eigentuemer_firmenname']
+        session['eigentuemer_vorname'] = request.form['eigentuemer_vorname']
+        session['eigentuemer_nachname'] = request.form['eigentuemer_nachname']
+        session['eigentuemer_strasse'] = request.form['eigentuemer_strasse']
+        session['eigentuemer_hausnummer'] = request.form['eigentuemer_hausnummer']
+        session['eigentuemer_plz'] = request.form['eigentuemer_plz']
+        session['eigentuemer_ort'] = request.form['eigentuemer_ort']
         return redirect(url_for('kundendaten'))
     return render_template('immobiliendaten.html', active_page='immobiliendaten')
 
