@@ -14,6 +14,11 @@ documents = {doc['id']: doc for doc in documents_list}
 # Laden der Felddefintion
 fields_df = pd.read_csv('./conf/felddefinition.csv')
 
+def storeSessionData(session, request):
+    for key in request.form.keys():
+        #print(f"{key} = {request.form.get(key)}")
+        session[key] = request.form.get(key)
+
 @app.route('/')
 def index():
     return redirect(url_for('produkte'))
@@ -29,43 +34,21 @@ def produkte():
 @app.route('/immobiliendaten', methods=['GET', 'POST'])
 def immobiliendaten():
     if request.method == 'POST':
-        session['immo_strasse'] = request.form['immo_strasse']
-        session['immo_hausnummer'] = request.form['immo_hausnummer']
-        session['immo_plz'] = request.form['immo_plz']
-        session['immo_ort'] = request.form['immo_ort']
-        session['buyer_is_owner'] = request.form['buyer_is_owner']
-        session['eigentuemer_typ'] = request.form['eigentuemer_typ']
-        session['eigentuemer_firmenname'] = request.form['eigentuemer_firmenname']
-        session['eigentuemer_vorname'] = request.form['eigentuemer_vorname']
-        session['eigentuemer_nachname'] = request.form['eigentuemer_nachname']
-        session['eigentuemer_strasse'] = request.form['eigentuemer_strasse']
-        session['eigentuemer_hausnummer'] = request.form['eigentuemer_hausnummer']
-        session['eigentuemer_plz'] = request.form['eigentuemer_plz']
-        session['eigentuemer_ort'] = request.form['eigentuemer_ort']
+        storeSessionData(session, request)
         return redirect(url_for('kundendaten'))
     return render_template('immobiliendaten.html', active_page='immobiliendaten')
 
 @app.route('/kundendaten', methods=['GET', 'POST'])
 def kundendaten():
     if request.method == 'POST':
-        session['anrede'] = request.form['anrede']
-        session['vorname'] = request.form['vorname']
-        session['nachname'] = request.form['nachname']
-        session['email'] = request.form['email']
-        session['telefonnummer'] = request.form['telefonnummer']
-        session['strasse'] = request.form['strasse']
-        session['hausnummer'] = request.form['hausnummer']
-        session['plz'] = request.form['plz']
-        session['ort'] = request.form['ort']
+        storeSessionData(session, request)
         return redirect(url_for('angaben'))
     return render_template('kundendaten.html', session=session, active_page='kundendaten')
 
 @app.route('/angaben', methods=['GET', 'POST'])
 def angaben():
     if request.method == 'POST':
-        for key in request.form.keys():
-            print(key)
-            session[key] = request.form.get(key)
+        storeSessionData(session, request)
         return redirect(url_for('eigentuemervollmacht'))
 
     selected_documents = session.get('selected_documents', [])
