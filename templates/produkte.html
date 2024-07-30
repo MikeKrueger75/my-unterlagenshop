@@ -9,12 +9,12 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for document in documents %}
             <div class="col">
-                <div class="card" id="card-{{ document.id }}" onclick="toggleCard('{{ document.id }}')">
+                <div class="card" id="card-{{ document.id }}" onclick="toggleCard('{{ document.id }}', event)">
                     <!--<img src="{{ url_for('static', filename='images/'+document.id+'.png') }}" class="card-img-top" alt="{{ document.name }}">-->
                     <div class="card-body">
                         <h5 class="card-title">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ document.id }}" name="{{ document.id }}" id="{{ document.id }}" {% if session.get(document.id)==document.id %}checked{% endif %} disabled>
+                                <input class="form-check-input" type="checkbox" value="{{ document.id }}" name="{{ document.id }}" id="{{ document.id }}" {% if session.get(document.id)==document.id %}checked{% endif %} onclick="toggleCheckbox('{{ document.id }}', event)">
                                 <label class="form-check-label" for="{{ document.id }}">
                                     {{ document.name }}
                                 </label>
@@ -35,18 +35,34 @@
     </form>
 
     <script>
-        function toggleCard(id) {
+        function toggleCard(id, event) {
             var card = document.getElementById('card-' + id);
             var checkbox = document.getElementById(id);
 
+            if (event.target !== checkbox) {
+                checkbox.checked = !checkbox.checked;
+            }
+
             if (checkbox.checked) {
-                checkbox.checked = false;
-                card.classList.remove('border-primary');
-                card.classList.remove('bg-light');
-            } else {
-                checkbox.checked = true;
                 card.classList.add('border-primary');
                 card.classList.add('bg-light');
+            } else {
+                card.classList.remove('border-primary');
+                card.classList.remove('bg-light');
+            }
+        }
+
+        function toggleCheckbox(id, event) {
+            event.stopPropagation();
+            var card = document.getElementById('card-' + id);
+            var checkbox = event.target;
+
+            if (checkbox.checked) {
+                card.classList.add('border-primary');
+                card.classList.add('bg-light');
+            } else {
+                card.classList.remove('border-primary');
+                card.classList.remove('bg-light');
             }
         }
 
