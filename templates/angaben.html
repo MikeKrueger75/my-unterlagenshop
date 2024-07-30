@@ -4,13 +4,17 @@
 {% block title %}Unterlagen{% endblock %}
 
 {% block content %}
-    <h1 class="my-4">Bestelldetails</h1>
+    <div class="form-row my-4">
+        <div class="col-12 text-left">
+            Für die Besorgung der Unterlagen, benötigen wir noch folgende Detailangaben:
+        </div>
+    </div>
     <form method="POST">
         {% for panel in fields_df['panel'].unique() %}
             {% set fields_in_panel = fields_df[fields_df['panel'] == panel] %}
             {% set panel_fields_to_show = fields_in_panel[fields_in_panel.index.isin(fields_to_show)] %}
             {% if not panel_fields_to_show.empty %}
-                <h4>{{ panel }}</h4>
+                <h1 class="my-4">{{ panel }}</h1>
                 {% for field in panel_fields_to_show.itertuples() %}
                     <div class="form-group">
                         <label for="{{ field.id }}">{{ field.name }}</label>
