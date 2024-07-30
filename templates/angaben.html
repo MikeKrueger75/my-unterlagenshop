@@ -1,12 +1,18 @@
 {% extends "base.html" %}
 {% set active_page = 'angaben' %}
 
-{% block title %}Bestelldetails{% endblock %}
+{% block title %}Unterlagen{% endblock %}
 
 {% block content %}
     <h1 class="my-4">Bestelldetails</h1>
+    
+    {% for document_id in session.get('selected_documents', []) %}
+        <h1>{{ documents[document_id]['name'] }}</h1>
+    {% endfor %}
+
     <form>
         <!-- Formularelemente für Bestelldetails hier hinzufügen -->
+        
         <div class="row">
             <div class="col-6 text-left">
                 <a href="{{ url_for('kundendaten') }}" class="btn btn-secondary">Zurück</a>

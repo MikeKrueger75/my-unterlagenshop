@@ -5,27 +5,28 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.permanent_session_lifetime = timedelta(days=7)
 
+documents_list = [
+        {"id":"doc_grundbuchauszug", "name": "Grundbuch", "preis": 50, "beschreibung": "Ein Grundbuchauszug enthält Informationen über die Eigentümer und Rechte an einer Immobilie."},
+        {"id":"doc_flurkarte", "name": "Flurkarte", "preis": 12.80, "beschreibung": "Eine Flurkarte zeigt die genaue Lage und Abgrenzung von Grundstücken."},
+        {"id":"doc_teilungserklaerung", "name": "Teilungserklärung", "preis": 100, "beschreibung": "Die Teilungserklärung teilt das Gebäude in einzelne Eigentumseinheiten auf."},
+        {"id":"doc_aufteilungsplan", "name": "Aufteilungsplan", "preis": 70, "beschreibung": "Der Aufteilungsplan zeigt die räumliche Aufteilung der Immobilie."},
+        {"id":"doc_eintragungsbewilligung", "name": "Eintragungsbewilligung", "preis": 40, "beschreibung": "Die Eintragungsbewilligung ist die Zustimmung zur Eintragung von Rechten ins Grundbuch."},
+        {"id":"doc_baulastenverzeichnis", "name": "Baulastenverzeichnis", "preis": 20, "beschreibung": "Das Baulastenverzeichnis enthält Informationen über öffentlich-rechtliche Verpflichtungen eines Grundstücks."},
+        {"id":"doc_altlastenverzeichnis", "name": "Altlastenverzeichnis", "preis": 25, "beschreibung": "Das Altlastenverzeichnis gibt Auskunft über Boden- und Grundwasserverunreinigungen."}
+    ]
+
+# Konvertiere die Liste in ein Dictionary
+documents = {doc['id']: doc for doc in documents_list}
+
 @app.route('/')
 def index():
     return redirect(url_for('produkte'))
 
 @app.route('/produkte', methods=['GET', 'POST'])
 def produkte():
-    documents = [
-        {"name": "Grundbuch", "id":"grundbuchauszug", "preis": 50, "beschreibung": "Ein Grundbuchauszug enthält Informationen über die Eigentümer und Rechte an einer Immobilie."},
-        {"name": "Flurkarte", "id":"flurkarte", "preis": 12.80, "beschreibung": "Eine Flurkarte zeigt die genaue Lage und Abgrenzung von Grundstücken."},
-        {"name": "Teilungserklärung", "id":"teilungserklaerung", "preis": 100, "beschreibung": "Die Teilungserklärung teilt das Gebäude in einzelne Eigentumseinheiten auf."},
-        {"name": "Aufteilungsplan", "id":"aufteilungsplan", "preis": 70, "beschreibung": "Der Aufteilungsplan zeigt die räumliche Aufteilung der Immobilie."},
-        {"name": "Eintragungsbewilligung", "id":"eintragungsbewilligung", "preis": 40, "beschreibung": "Die Eintragungsbewilligung ist die Zustimmung zur Eintragung von Rechten ins Grundbuch."},
-        {"name": "Baulastenverzeichnis", "id":"baulastenverzeichnis", "preis": 20, "beschreibung": "Das Baulastenverzeichnis enthält Informationen über öffentlich-rechtliche Verpflichtungen eines Grundstücks."},
-        {"name": "Altlastenverzeichnis", "id":"altlastenverzeichnis", "preis": 25, "beschreibung": "Das Altlastenverzeichnis gibt Auskunft über Boden- und Grundwasserverunreinigungen."}
-    ]
     if request.method == 'POST':
-        ## delete all to refill new and make uncheck possible
-        for doc in documents:
-            session[doc['id']] = ''
-        for key, val in request.form.items():
-            session[key] = key
+        selected_documents = request.form.getlist('documents')
+        session['selected_documents'] = selected_documents
         return redirect(url_for('immobiliendaten'))
     return render_template('produkte.html', documents=documents, active_page='produkte')
 
@@ -65,7 +66,8 @@ def kundendaten():
 
 @app.route('/angaben')
 def angaben():
-    return render_template('angaben.html', active_page='angaben')
+    selected_documents = session.get('selected_documents', [])
+    return render_template('angaben.html', documents=documents, selected_documents=selected_documents, active_page='angaben')
 
 @app.route('/eigentuemervollmacht')
 def eigentuemervollmacht():
