@@ -36,6 +36,7 @@ def immobiliendaten():
         session['immo_hausnummer'] = request.form['immo_hausnummer']
         session['immo_plz'] = request.form['immo_plz']
         session['immo_ort'] = request.form['immo_ort']
+        session['buyer_is_owner'] = request.form['buyer_is_owner']
         session['eigentuemer_typ'] = request.form['eigentuemer_typ']
         session['eigentuemer_firmenname'] = request.form['eigentuemer_firmenname']
         session['eigentuemer_vorname'] = request.form['eigentuemer_vorname']
