@@ -9,16 +9,14 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for document_id, document in documents.items() %}
             <div class="col">
-                <div class="card" id="card-{{ document_id }}" onclick="toggleCard('{{ document_id }}', event)">
+                <div class="card h-100" id="card-{{ document_id }}" onclick="toggleCard('{{ document_id }}', event)">
                     <!--<img src="{{ url_for('static', filename='images/'+document.id+'.png') }}" class="card-img-top" alt="{{ document.name }}">-->
                     <div class="card-body">
                         <h5 class="card-title">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ document_id }}" name="documents" id="{{ document_id }}" {% if document_id in session.get('selected_documents', []) %}checked{% endif %} onclick="toggleCheckbox('{{ document_id }}', event)">
-                                <label class="form-check-label" for="{{ document_id }}">
-                                    {{ document.name }}
-                                </label>
+                                <input class="form-check-input" type="checkbox" value="{{ document_id }}" name="documents" id="{{ document_id }}" {% if document_id in session.get('selected_documents', []) %}checked{% endif %} onclick="toggleCheckbox('{{ document_id }}', event)" hidden>
                             </div>
+                            {{ document.name }}
                         </h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ "%.2f€"|format(document.preis) }}</h6>
                         <p class="card-text">{{ document.beschreibung }}</p>
