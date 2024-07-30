@@ -9,28 +9,69 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for document in documents %}
             <div class="col">
-            <div class="card">
-                <!--<img src="{{ url_for('static', filename='images/'+document.id+'.png') }}" class="card-img-top" alt="{{ document.name }}">-->
-                <div class="card-body">
-                    <h5 class="card-title">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{ document.id }}" name="{{ document.id }}" id="{{ document.id }}" {% if session.get(document.id)==document.id%}checked{% endif %}>
-                        <label class="form-check-label" for="{{ document.id }}">
-                            {{ document.name }}
-                        </label>
+                <div class="card" id="card-{{ document.id }}" onclick="toggleCard('{{ document.id }}')">
+                    <!--<img src="{{ url_for('static', filename='images/'+document.id+'.png') }}" class="card-img-top" alt="{{ document.name }}">-->
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ document.id }}" name="{{ document.id }}" id="{{ document.id }}" {% if session.get(document.id)==document.id %}checked{% endif %} disabled>
+                                <label class="form-check-label" for="{{ document.id }}">
+                                    {{ document.name }}
+                                </label>
+                            </div>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ "%.2f€"|format(document.preis) }}</h6>
+                        <p class="card-text">{{ document.beschreibung }}</p>
                     </div>
-                    </h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ "%.2f€"|format(document.preis) }}</h6>
-                    <p class="card-text">{{ document.beschreibung }}</p>
                 </div>
             </div>
-            </div>
             {% endfor %}
-        </div>    
+        </div>
         <div class="row">
             <div class="col-12 text-right">
                 <button type="submit" class="btn btn-primary">Weiter</button>
             </div>
         </div>
     </form>
+
+    <script>
+        function toggleCard(id) {
+            var card = document.getElementById('card-' + id);
+            var checkbox = document.getElementById(id);
+
+            if (checkbox.checked) {
+                checkbox.checked = false;
+                card.classList.remove('border-primary');
+                card.classList.remove('bg-light');
+            } else {
+                checkbox.checked = true;
+                card.classList.add('border-primary');
+                card.classList.add('bg-light');
+            }
+        }
+
+        // Initialize the cards based on the checkbox state
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkboxes = document.querySelectorAll('.form-check-input');
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    var card = document.getElementById('card-' + checkbox.id);
+                    card.classList.add('border-primary');
+                    card.classList.add('bg-light');
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .card {
+            cursor: pointer;
+        }
+        .card.border-primary {
+            border: 2px solid #007bff;
+        }
+        .card.bg-light {
+            background-color: #f8f9fa;
+        }
+    </style>
 {% endblock %}
