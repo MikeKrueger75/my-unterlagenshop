@@ -5,10 +5,19 @@
 
 {% block content %}
     <h1 class="my-4">Bestelldetails</h1>
-    <form>
-        <!-- Formularelemente für Bestelldetails hier hinzufügen -->
-        {% for document_id in session.get('selected_documents', []) %}
-            <h3>{{ documents[document_id]['name'] }}</h3>
+    <form method="POST">
+        {% for panel in fields_df['panel'].unique() %}
+            {% set fields_in_panel = fields_df[fields_df['panel'] == panel] %}
+            {% set panel_fields_to_show = fields_in_panel[fields_in_panel.index.isin(fields_to_show)] %}
+            {% if not panel_fields_to_show.empty %}
+                <h4>{{ panel }}</h4>
+                {% for field in panel_fields_to_show.itertuples() %}
+                    <div class="form-group">
+                        <label for="{{ field.id }}">{{ field.name }}</label>
+                        <input type="{{ field.type }}" class="form-control" id="{{ field.id }}" name="{{ field.id }}" value="{{ session.get(field.id, '') }}" {% if field.required == 'x' %}required{% endif %}>
+                    </div>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
         
         <div class="form-row my-4">
@@ -16,7 +25,7 @@
                 <a href="{{ url_for('kundendaten') }}" class="btn btn-secondary">Zurück</a>
             </div>
             <div class="col-6 text-right">
-                <a href="{{ url_for('eigentuemervollmacht') }}" class="btn btn-primary">Weiter</a>
+                <button type="submit" class="btn btn-primary">Weiter</button>
             </div>
         </div>
     </form>

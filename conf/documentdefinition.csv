@@ -1,0 +1,8 @@
+id,name,preis,beschreibung
+doc_grundbuchauszug,Grundbuchauszug,50,Ein Grundbuchauszug enthält Informationen über die Eigentümer und Rechte an einer Immobilie.
+doc_flurkarte,Flurkarte,30,Eine Flurkarte zeigt die genaue Lage und Abgrenzung von Grundstücken.
+doc_teilungserklaerung,Teilungserklärung,100,Die Teilungserklärung teilt das Gebäude in einzelne Eigentumseinheiten auf.
+doc_aufteilungsplan,Aufteilungsplan,70,Der Aufteilungsplan zeigt die räumliche Aufteilung der Immobilie.
+doc_eintragungsbewilligung,Eintragungsbewilligung,40,Die Eintragungsbewilligung ist die Zustimmung zur Eintragung von Rechten ins Grundbuch.
+doc_baulastenverzeichnis,Baulastenverzeichnis,20,Das Baulastenverzeichnis enthält Informationen über öffentlich-rechtliche Verpflichtungen eines Grundstücks.
+doc_altlastenverzeichnis,Altlastenverzeichnis,25,Das Altlastenverzeichnis gibt Auskunft über Boden- und Grundwasserverunreinigungen.

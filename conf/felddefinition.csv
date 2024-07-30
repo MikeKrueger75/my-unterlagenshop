@@ -1,0 +1,15 @@
+name,id,required,type,panel,doc_grundbuchauszug,doc_flurkarte,doc_teilungserklaerung,doc_aufteilungsplan,doc_eintragungsbewilligung,doc_baulastenverzeichnis,doc_altlastenverzeichnis
+Amtsgericht,ang_amtsgericht,x,text,Basisangaben,x,,x,x,x,,
+Grundbuch von (Ort),ang_grundbuch_von,x,text,Basisangaben,x,,x,x,x,,
+Band-/Blattnummer,ang_band_blatt,x,text,Basisangaben,x,x,x,x,x,x,x
+"Gemarkung (falls abweichend von ""Grundbuch von"")",ang_gemarkung,,text,Basisangaben,x,,x,x,x,x,x
+Flur (falls vorhanden),ang_flur,,text,Basisangaben,x,x,,,,x,x
+Flurstück / Flurstücke,ang_flurstuecke,x,text,Basisangaben,x,x,,,,x,x
+Urkundennummer (falls vorhanden ausfüllen),ang_urkunde_nummer,,text,Angaben zur Teilungserklärung,,,x,,,,
+Datum der Urkunde,ang_urkunde_datum,x,date,Angaben zur Teilungserklärung,,,x,,,,
+Nummer Wohn- / Teileigentum,ang_nr_wohn_teil_eigentum,x,text,Angaben zum Aufteilungsplan,,,,x,,,
+Kellernummer / Abstellraum,ang_nr_keller,,text,Angaben zum Aufteilungsplan,,,,x,,,
+Stellplatznummer,ang_nr_stellplatz,,text,Angaben zum Aufteilungsplan,,,,x,,,
+Recht (laufende Nummer oder Spanne),ang_recht,x,text,Angaben zur Eintragungsbewilligung,,,,,x,,
+Urkundennummer (falls vorhanden ausfüllen),ang_recht_urkunde_nummer,,text,Angaben zur Eintragungsbewilligung,,,,,x,,
+Datum der Urkunde,ang_recht_urkunde_datum,x,date,Angaben zur Eintragungsbewilligung,,,,,x,,

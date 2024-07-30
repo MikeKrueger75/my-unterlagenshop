@@ -1,22 +1,18 @@
 from flask import Flask, render_template, redirect, url_for, request, session
 from datetime import timedelta
+import pandas as pd
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.permanent_session_lifetime = timedelta(days=7)
 
-documents_list = [
-        {"id":"doc_grundbuchauszug", "name": "Grundbuch", "preis": 50, "beschreibung": "Ein Grundbuchauszug enthält Informationen über die Eigentümer und Rechte an einer Immobilie."},
-        {"id":"doc_flurkarte", "name": "Flurkarte", "preis": 12.80, "beschreibung": "Eine Flurkarte zeigt die genaue Lage und Abgrenzung von Grundstücken."},
-        {"id":"doc_teilungserklaerung", "name": "Teilungserklärung", "preis": 100, "beschreibung": "Die Teilungserklärung teilt das Gebäude in einzelne Eigentumseinheiten auf."},
-        {"id":"doc_aufteilungsplan", "name": "Aufteilungsplan", "preis": 70, "beschreibung": "Der Aufteilungsplan zeigt die räumliche Aufteilung der Immobilie."},
-        {"id":"doc_eintragungsbewilligung", "name": "Eintragungsbewilligung", "preis": 40, "beschreibung": "Die Eintragungsbewilligung ist die Zustimmung zur Eintragung von Rechten ins Grundbuch."},
-        {"id":"doc_baulastenverzeichnis", "name": "Baulastenverzeichnis", "preis": 20, "beschreibung": "Das Baulastenverzeichnis enthält Informationen über öffentlich-rechtliche Verpflichtungen eines Grundstücks."},
-        {"id":"doc_altlastenverzeichnis", "name": "Altlastenverzeichnis", "preis": 25, "beschreibung": "Das Altlastenverzeichnis gibt Auskunft über Boden- und Grundwasserverunreinigungen."}
-    ]
-
-# Konvertiere die Liste in ein Dictionary
+# Laden der Dokumente aus der CSV-Datei
+documents_df = pd.read_csv('./conf/documentdefinition.csv')
+documents_list = documents_df.to_dict(orient='records')
 documents = {doc['id']: doc for doc in documents_list}
+
+# Laden der Felddefintion
+fields_df = pd.read_csv('./conf/felddefinition.csv')
 
 @app.route('/')
 def index():
@@ -64,10 +60,24 @@ def kundendaten():
         return redirect(url_for('angaben'))
     return render_template('kundendaten.html', session=session, active_page='kundendaten')
 
-@app.route('/angaben')
+@app.route('/angaben', methods=['GET', 'POST'])
 def angaben():
+    if request.method == 'POST':
+        for key in request.form.keys():
+            print(key)
+            session[key] = request.form.get(key)
+        return redirect(url_for('eigentuemervollmacht'))
+
     selected_documents = session.get('selected_documents', [])
-    return render_template('angaben.html', documents=documents, selected_documents=selected_documents, active_page='angaben')
+    
+    # Erstellung einer Liste von Feldern, die für die ausgewählten Unterlagen erforderlich sind
+    fields_to_show = set()
+    for doc_id in selected_documents:
+        if doc_id in fields_df.columns:
+            required_fields = fields_df.index[fields_df[doc_id] == 'x'].tolist()
+            fields_to_show.update(required_fields)
+    
+    return render_template('angaben.html', documents=documents, selected_documents=selected_documents, fields_df=fields_df, fields_to_show=fields_to_show, active_page='angaben')
 
 @app.route('/eigentuemervollmacht')
 def eigentuemervollmacht():
