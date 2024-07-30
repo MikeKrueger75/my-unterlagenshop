@@ -1,6 +1,8 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, send_file
 from datetime import timedelta
 import pandas as pd
+import os
+from pdf_filler import create_pdf_with_data
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -21,6 +23,7 @@ def storeSessionData(session, request):
 
 @app.route('/')
 def index():
+    session.clear()
     return redirect(url_for('produkte'))
 
 @app.route('/produkte', methods=['GET', 'POST'])
@@ -77,6 +80,11 @@ def bezahlung():
 @app.route('/bestaetigung')
 def bestaetigung():
     return render_template('bestaetigung.html', active_page='bestaetigung')
+
+@app.route('/download_vollmacht')
+def download_vollmacht():
+    pdf_path = create_pdf_with_data(session)
+    return send_file(pdf_path, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
