@@ -5,15 +5,13 @@
 
 {% block content %}
     <h1 class="my-4">Bestelldetails</h1>
-    
-    {% for document_id in session.get('selected_documents', []) %}
-        <h1>{{ documents[document_id]['name'] }}</h1>
-    {% endfor %}
-
     <form>
         <!-- Formularelemente für Bestelldetails hier hinzufügen -->
+        {% for document_id in session.get('selected_documents', []) %}
+            <h3>{{ documents[document_id]['name'] }}</h3>
+        {% endfor %}
         
-        <div class="row">
+        <div class="form-row my-4">
             <div class="col-6 text-left">
                 <a href="{{ url_for('kundendaten') }}" class="btn btn-secondary">Zurück</a>
             </div>
