@@ -64,8 +64,8 @@ def merge_pdfs(input_pdf_path, overlay_pdf_path, output_pdf_path):
 
 def create_pdf_with_data(session_data):
     input_pdf_path = './conf/Blanko_Vollmacht_Value.pdf'
-    output_pdf_path = './temp/Eigentümervollmacht_Value_.pdf'
-    overlay_pdf_path = './temp/overlay.pdf'
+    output_pdf_path = './tmp/Eigentümervollmacht_Value_.pdf'
+    overlay_pdf_path = './tmp/overlay.pdf'
 
     # Map the session data to the PDF field names
     if session_data.get('eigentuemer_typ', '') == 'eigentuemer_person':
