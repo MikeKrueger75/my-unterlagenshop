@@ -37,7 +37,7 @@
                 Sind Sie der Besitzer der Immobilie?
             </div>
             <div class="form-check form-check-inline col-auto">
-                <input class="form-check-input" type="radio" name="buyer_is_owner" id="buyer_is_owner_y" value="buyer_is_owner_y" {% if session.get('buyer_is_owner') == "buyer_is_owner_y" %}checked{% endif %}>
+                <input class="form-check-input" type="radio" name="buyer_is_owner" id="buyer_is_owner_y" value="buyer_is_owner_y" {% if session.get('buyer_is_owner') == "buyer_is_owner_y" %}checked{% endif %} required>
                 <label class="form-check-label" for="eigentuemer_person">
                 Ja
                 </label>
@@ -49,7 +49,7 @@
                 </label>
             </div>
         </div>
-        <div class="form-group" id="eigentuemer">
+        <div id="eigentuemer">
             <div class="form-row">
                 <div class="form-group col-md-12">
                     Für die Einholung von Informationen über fremde Immobilien ist die Zustimmung (Vollmacht) des Eigentümers erforderlich. Um die Vollmacht zu erstellen, benötigen wir einige Angaben zum Eigentümer.
